@@ -94,18 +94,6 @@
 							</div>
 						</div>
 						<div class="form-group">
-							<label class="control-label col-sm-4"><?php echo phrase('Type'); ?></label>
-							<div class="col-sm-7">
-								<select name="level" class="form-control">
-									<option value=""><?php echo phrase('select_type_of_account'); ?></option>
-									<option value="1"<?php if($page['level'] == '1') echo ' selected'; ?>><?php echo phrase('adminstrator'); ?></option>
-									<option value="0"<?php if($page['level'] == '0') echo ' selected'; ?>><?php echo phrase('contributor'); ?></option>
-									<option value="2"<?php if($page['level'] == '2') echo ' selected'; ?>><?php echo phrase('student'); ?></option>
-								</select>
-							</div>
-						</div>
-						
-						<div class="form-group">
 							<label class="control-label col-sm-4"><?php echo phrase('email'); ?></label>
 							<div class="col-sm-7">
 								<input type="text" class="form-control" name="email" value="<?php echo $page['email']; ?>" />

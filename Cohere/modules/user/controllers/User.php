@@ -188,6 +188,55 @@ class User extends CI_Controller
 			}
 		}
 	}
+
+	//db
+	function db(){
+		if($this->session->userdata('loggedIn')) redirect();
+		
+		if(null != $this->input->post('hash'))
+		{
+			
+		}
+		else
+		{
+			$user = $this->facebook->getUser();
+			if($user)
+			{
+				if($this->Actions_model->facebookLogin($user))
+				{
+					redirect($this->session->userdata('userName'));
+				}
+			}
+			$data['password']	= $this->User_model->getAll();
+			$data['meta']		= array(
+				'title' 		=> phrase('db'),
+				'descriptions'	=> phrase('whatever_you_writing_for_is_a_reportations'),
+				'keywords'		=> 'post, kj, blogs, article, social, blogging',
+				'image'			=> guessImage('users'),
+				'author'		=> $this->settings['siteTitle']
+			);
+			if($this->input->is_ajax_request())
+			{
+				$this->output->set_content_type('application/json');
+				$this->output->set_output(
+					json_encode(
+						array(
+							'meta'		=> $data['meta'],
+							'html'		=> $this->load->view('db', $data, true)
+						)
+					)
+				);
+			}
+			else
+			{
+				$this->template->build('db', $data);
+			}
+		}
+	
+
+
+
+	}
 	
 	function dashboard()
 	{
@@ -863,7 +912,7 @@ class User extends CI_Controller
 			$data['meta']		= array(
 				'title' 		=> phrase('edit_profile'),
 				'descriptions'	=> phrase('whatever_you_writing_for_is_a_reportations'),
-				'keywords'		=> 'post, dwitri, blogs, article, social, blogging',
+				'keywords'		=> 'post, kj, blogs, article, social, blogging',
 				'image'			=> guessImage('users'),
 				'author'		=> $this->settings['siteTitle']
 			);

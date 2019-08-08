@@ -7,6 +7,13 @@ class User_model extends CI_Model
 	{
 		parent::__construct();
 	}
+	function getAll(){
+		  $this->db->select("password");
+  $this->db->from('enc');
+  $query = $this->db->get();
+  return $query->result_array();
+
+	}
 	
 	function getOwnProfile()
 	{

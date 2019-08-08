@@ -98,7 +98,7 @@
 			$('.redactor').redactor({
 				buttons:["formatting","|","bold","italic","deleted","|","unorderedlist","orderedlist","outdent","indent","|","image", "video", "link", "table","|","alignment","|","horizontalrule"],
 				plugins: ['fontcolor'],
-				minHeight: 200,
+				minHeight: 300,
 				imageUpload: '<?php echo base_url('user/upload/images/posts');?>',
 				imageGetJson: '<?php echo base_url('user/upload/choose/posts');?>',
 				imageUploadErrorCallback: function(response)

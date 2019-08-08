@@ -54,7 +54,6 @@ class Actions_model extends CI_Model
 
 	public function sendpassword($data)
 {
-	$this->load->library('email');
     $email = $data['email'];
     $query1=$this->db->query("SELECT *  from users where email = '".$email."' ");
     $row=$query1->result_array();

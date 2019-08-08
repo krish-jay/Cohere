@@ -12,31 +12,27 @@
 					<?php if($this->input->is_ajax_request() && isset($modal)) { ?>
 					<div class="modal-header">
 						<button type="button" class="close" data-dismiss="modal" aria-hidden="true"><i class="fa fa-times"></i></button>
-						<h3><i class="fa fa-plus"></i> &nbsp; <?php echo phrase('submit_open_letter'); ?></h3>
+						<h3><i class="fa fa-plus"></i> &nbsp; <?php echo phrase('submit_question'); ?></h3>
 					</div>
 					<?php } ?>
-					
+					<h3><i class="fa fa-plus"></i> &nbsp; <?php echo phrase('submit_question'); ?></h3>
 					<div class="modal-body">
 						<div class="form-group">
 							<div class="col-sm-12">
-								<input type="text" name="title" class="form-control input-lg" value="<?php echo htmlspecialchars(set_value('title')); ?>" placeholder="<?php echo phrase('letter_headline'); ?>" />
+								<input type="text" name="title" class="form-control input-lg" value="<?php echo htmlspecialchars(set_value('title')); ?>" placeholder="<?php echo phrase('question_title'); ?>" />
 							</div>
 						</div>
 						<div class="form-group">
 							<div class="col-sm-12">
-								<input type="text" name="targetName" class="form-control" value="<?php echo htmlspecialchars(set_value('targetName')); ?>" placeholder="<?php echo phrase('aimed_to'); ?>" />
+								<textarea name="content" class="redactor form-control" placeholder="<?php echo phrase('ask_your_questions_here'); ?>"><?php echo set_value('content'); ?></textarea>
 							</div>
 						</div>
 						<div class="form-group">
-							<div class="col-sm-12">
-								<textarea name="targetDetails" class="form-control" placeholder="<?php echo phrase('target_details'); ?>"><?php echo htmlspecialchars(set_value('targetDetails')); ?></textarea>
-							</div>
-						</div>
-						<div class="form-group">
-							<div class="col-sm-12">
-								<textarea name="content" class="redactor form-control" placeholder="<?php echo phrase('write_complete_letter_here'); ?>"><?php echo set_value('content'); ?></textarea>
-							</div>
-						</div>
+									<div class="col-sm-12">
+										<h4><?php echo phrase('tags'); ?></h4>
+										<input name="tags"  data-role="tagsinput" class="form-control" type="text" value="<?php echo set_value('tags'); ?>" />
+									</div>
+								</div>
 						<div class="form-group">
 							<div class="col-sm-12 statusHolder">
 							</div>
@@ -69,9 +65,26 @@
 		if($(window).width() > 768)
 		{
 			$('.redactor').redactor({
-				buttons:["formatting","|","bold","italic","deleted","|","unorderedlist","orderedlist","outdent","indent","|","alignment","|","horizontalrule"],
+				buttons:["formatting","|","bold","italic","deleted","|","unorderedlist","orderedlist","outdent","indent","|","image", "link", "table","|","alignment","|","horizontalrule"],
 				plugins: ['fontcolor'],
-				minHeight: 200
+				minHeight: 300,
+				imageUpload: '<?php echo base_url('user/upload/images/posts');?>',
+				imageGetJson: '<?php echo base_url('user/upload/choose/posts');?>',
+				imageUploadErrorCallback: function(response)
+				{
+					alert(response.error);
+				}
 			});
 		}
+		$('.redactor').redactor({
+				buttons:["formatting","|","bold","italic","deleted","|","unorderedlist","orderedlist","outdent","indent","|","image", "link", "table","|","alignment","|","horizontalrule"],
+				plugins: ['fontcolor'],
+				minHeight: 200,
+				imageUpload: '<?php echo base_url('user/upload/images/posts');?>',
+				imageGetJson: '<?php echo base_url('user/upload/choose/posts');?>',
+				imageUploadErrorCallback: function(response)
+				{
+					alert(response.error);
+				}
+			});
 	</script>

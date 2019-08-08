@@ -46,7 +46,7 @@ class Openletters extends CI_Controller
 		$data['meta']		= array(
 			'title' 		=> phrase('open_letters'),
 			'descriptions'	=> phrase('whatever_you_writing_for_is_a_reportations'),
-			'keywords'		=> 'post, dwitri, blogs, article, social, blogging',
+			'keywords'		=> 'post, kj, blogs, article, social, blogging',
 			'image'			=> guessImage('openletters'),
 			'author'		=> $this->settings['siteTitle']
 		);
@@ -74,10 +74,9 @@ class Openletters extends CI_Controller
 		if(!$this->session->userdata('loggedIn')) return error(403, ($this->input->is_ajax_request() ? 'ajax' : null));
 		if($this->input->post('hash'))
 		{
-			$this->form_validation->set_rules('title', phrase('letter_headline'), 'trim|xss_clean|required|is_unique[openletters.title]|max_length[260]');
-			$this->form_validation->set_rules('targetName', phrase('aimed_to'), 'trim|xss_clean|required');
-			$this->form_validation->set_rules('targetDetails', phrase('target_details'), 'trim|xss_clean|required');
-			$this->form_validation->set_rules('content', phrase('letter_content'), 'trim|xss_clean|required|min_length[160]');
+			$this->form_validation->set_rules('title', phrase('question_subject'), 'trim|xss_clean|required|is_unique[openletters.title]|max_length[260]');
+			$this->form_validation->set_rules('content', phrase('question_content'), 'trim|xss_clean|required|min_length[60]');
+			$this->form_validation->set_rules('tags', phrase('question_tags'), 'trim|xss_clean|required');
 			
 			if($this->form_validation->run() == FALSE)
 			{
@@ -85,30 +84,24 @@ class Openletters extends CI_Controller
 			}
 			else
 			{
-				if (null !== $this->input->post('openletterHeadline') && $this->input->post('openletterHeadline') == 'Y') {
-					$headline = 'Y';
-				} else {
-					$headline = 'N';
-				}
+				
 				$fields = array(
 					'contributor'	=> $this->session->userdata('userID'),
 					'title'			=> $this->input->post('title'),
 					'slug'			=> format_uri($this->input->post('title')),
 					'content'		=> $this->input->post('content'),
-					'targetName'	=> $this->input->post('targetName'),
-					'targetDetails'	=> $this->input->post('targetDetails'),
-					'headline'		=> $headline,
+					'tags'			=> $this->input->post('tags'),
 					'language'		=> $this->session->userdata('language'),
 					'timestamp'		=> time()
 				);
 				if($this->model->createPost($fields))
 				{
-					$this->session->set_flashdata('success', phrase('letter_was_successfully_submitted'));
+					$this->session->set_flashdata('success', phrase('question_was_successfully_submitted'));
 					echo json_encode(array("status" => 200, "redirect" => base_url('openletters/' . format_uri($this->input->post('title')))));
 				}
 				else
 				{
-					echo json_encode(array('status' => 500, 'messages' => phrase('unable_to_submit_letter')));
+					echo json_encode(array('status' => 500, 'messages' => phrase('unable_to_submit_question')));
 				}
 			}
 		}
@@ -154,40 +147,33 @@ class Openletters extends CI_Controller
 		if($this->input->post('hash'))
 		{
 			$this->form_validation->set_rules('title', phrase('letter_headline'), 'trim|xss_clean|required|is_unique[openletters.title.slug.'.$this->uri->segment(4).']|max_length[260]');
-			$this->form_validation->set_rules('targetName', phrase('aimed_to'), 'trim|xss_clean|required');
-			$this->form_validation->set_rules('targetDetails', phrase('target_details'), 'trim|xss_clean|required');
-			$this->form_validation->set_rules('content', phrase('content'), 'trim|xss_clean|required|min_length[160]');
-			
+			$this->form_validation->set_rules('content', phrase('content'), 'trim|xss_clean|required|min_length[60]');
+			$this->form_validation->set_rules('tags', phrase('question_tags'), 'trim|xss_clean|required');
+
 			if($this->form_validation->run() == FALSE)
 			{
 				echo json_encode(array('status' => 204, 'messages' => array(validation_errors('<span><i class="fa fa-ban"></i> &nbsp; ', '</span><br />'))));
 			}
 			else
 			{
-				if (null !== $this->input->post('openletterHeadline') && $this->input->post('openletterHeadline') == 'Y') {
-					$headline = 'Y';
-				} else {
-					$headline = 'N';
-				}
+				
 				$fields = array(
 					'title'			=> $this->input->post('title'),
 					'slug'			=> format_uri($this->input->post('title')),
 					'content'		=> $this->input->post('content'),
-					'targetName'	=> $this->input->post('targetName'),
-					'targetDetails'	=> $this->input->post('targetDetails'),
-					'headline'		=> $headline,
+					'tags'			=> $this->input->post('tags'),
 					'language'		=> $this->session->userdata('language'),
 					'timestamp'		=> time()
 				);
 		
 				if($this->model->updatePost($fields, $this->uri->segment(4)))
 				{
-					$this->session->set_flashdata('success', phrase('letter_was_updated_successfully'));
+					$this->session->set_flashdata('success', phrase('question_was_updated_successfully'));
 					echo json_encode(array("status" => 200, "redirect" => base_url('user/openletters')));
 				}
 				else
 				{
-					echo json_encode(array('status' => 500, 'messages' => phrase('unable_to_update_letter')));
+					echo json_encode(array('status' => 500, 'messages' => phrase('unable_to_update_question')));
 				}
 			}
 		}

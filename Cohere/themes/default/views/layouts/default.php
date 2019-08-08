@@ -13,7 +13,7 @@
 		<meta property="og:type" content="article"/>
 		<meta property="og:url" content="<?php echo current_url(); ?>"/>
 		<meta property="og:site_name" content="dwitri.com" />
-		<meta property="article:author" content="<?php echo (isset($meta['author']) ? $meta['author'] : 'https://www.facebook.com/sethu.ac.in'); ?>" />
+		<meta property="article:author" content="<?php echo (isset($meta['author']) ? $meta['author'] : 'https://www.facebook.com/DWITRIcom'); ?>" />
 		<meta property="og:description" content="<?php echo truncate($meta['descriptions'], 260); ?>" />
 		<meta property="og:image" content="<?php echo truncate($meta['image'], 160); ?>" />
 		<meta property="fb:app_id" content="423905061028802"/>
@@ -42,6 +42,9 @@
 						</li>
 						<li<?php echo ($this->uri->segment(1) == 'snapshots' ? ' class="active"' : ''); ?>>
 							<a href="<?php echo base_url('snapshots'); ?>" class="ajaxLoad"><i class="fa fa-image"></i> <?php echo phrase('__snapshot'); ?></a>
+						</li>
+						<li<?php echo ($this->uri->segment(1) == 'openletters' ? ' class="active"' : ''); ?>>
+							<a href="<?php echo base_url('openletters'); ?>" class="ajaxLoad"><i class="fa fa-comments"></i> <?php echo phrase('__openletters'); ?></a>
 						</li>
 						
 						
@@ -98,6 +101,9 @@
 								</li>
 								<li>
 									<a href="<?php echo base_url('user/snapshots'); ?>" class="ajaxLoad"><i class="fa fa-image"></i> <?php echo phrase('snapshots'); ?></a>
+								</li>
+								<li>
+									<a href="<?php echo base_url('user/openletters'); ?>" class="ajaxLoad"><i class="fa fa-comments"></i> <?php echo phrase('openletters'); ?></a>
 								</li>
 								<li role="separator" class="divider"></li>
 							
@@ -199,7 +205,8 @@
 						<a href="<?php echo base_url('users'); ?>" class="ajaxLoad"><?php echo phrase('search_user'); ?></a>
 						&nbsp; - &nbsp; 
 						<a href="<?php echo base_url('pages/contact'); ?>" class="ajaxLoad"><?php echo phrase('feedback'); ?></a><br>
-						<?php echo phrase('all_rights_reserved'); ?>, <a href="//sethu.ac.in" target="_blank" />Sethu Institute of Technology</a>
+						<?php echo phrase('all_rights_reserved'); ?>, <a href="//sethu.ac.in" target="_blank" />Sethu Institute of Technology</a><br>
+						<?php echo phrase('Created_by'); ?>, <a href="" target="_blank" />Kj</a>
 					</div>
 				</div>
 			</div>
@@ -259,6 +266,9 @@
 				</li>
 				<li>
 					<a href="<?php echo base_url('snapshots'); ?>" class="ajaxLoad"><i class="fa fa-image"></i> <?php echo phrase('snapshot'); ?></a>
+				</li>
+				<li>
+					<a href="<?php echo base_url('openletters'); ?>" class="ajaxLoad"><i class="fa fa-comments"></i> <?php echo phrase('openletters'); ?></a>
 				</li>
 				<li>
 					<a href="<?php echo base_url('users'); ?>" class="ajaxLoad"> <i class="fa fa-user"></i><i class="fa fa-search"></i><?php echo phrase('search_user'); ?></a>
@@ -395,6 +405,8 @@
 					<div class="modal-body">
 						<a href="<?php echo base_url('user/posts/add'); ?>" class="btn btn-primary btn-block btn-lg newPost"><i class="fa fa-newspaper-o"></i> &nbsp; <?php echo phrase('write_article'); ?></a>
 						<a href="<?php echo base_url('user/snapshots/add'); ?>" class="btn btn-info btn-block btn-lg newPost"><i class="fa fa-image"></i> &nbsp; <?php echo phrase('send_snapshot'); ?></a>
+						<a href="<?php echo base_url('user/openletters/add'); ?>" class="btn btn-warning btn-block btn-lg newPost"><i class="fa fa-comments"></i> &nbsp; <?php echo phrase('submit_a_question'); ?></a>
+						
 						
 					</div>
 					<div class="modal-footer text-center">

@@ -18,7 +18,7 @@
 				</div>
 				<div class="col-sm-3">
 					<div class="col-12-xs">
-						<a href="<?php echo base_url('user/openletters/add'); ?>" class="btn btn-lg btn-block btn-primary newPost"><i class="fa fa-plus"></i> &nbsp; <?php echo phrase('write_letter'); ?></a>
+						<a href="<?php echo base_url('user/openletters/add'); ?>" class="btn btn-lg btn-block btn-primary newPost" data-toggle="modal"><i class="fa fa-plus"></i> &nbsp; <?php echo phrase('ask_question'); ?></a>
 					</div>
 				</div>
 			</div>

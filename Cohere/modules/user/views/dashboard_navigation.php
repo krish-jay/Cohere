@@ -8,7 +8,10 @@
 							
 							<a href="<?php echo base_url('user/snapshots'); ?>" class="ajaxLoad list-group-item<?php if($this->uri->segment(2) == 'snapshots') echo ' active'; ?>"><i class="fa fa-image"></i> &nbsp; <?php echo phrase('snapshots'); ?> &nbsp; <?php echo (countPosts('snapshots', ($this->session->userdata('user_level') == 1 ? null : $this->session->userdata('userID'))) > 0 ? '<span class="badge">' . countPosts('snapshots', ($this->session->userdata('user_level') == 1 ? null : $this->session->userdata('userID'))) . '</span>' : '') ?></a>
 
+							<a href="<?php echo base_url('user/openletters'); ?>" class="ajaxLoad list-group-item<?php if($this->uri->segment(2) == 'openletters') echo ' active'; ?>"><i class="fa fa-comments"></i> &nbsp; <?php echo phrase('open_letters'); ?> &nbsp; <?php echo (countPosts('openletters', ($this->session->userdata('user_level') == 1 ? null : $this->session->userdata('userID'))) > 0 ? '<span class="badge">' . countPosts('openletters', ($this->session->userdata('user_level') == 1 ? null : $this->session->userdata('userID'))) . '</span>' : '') ?></a>
+							
 							<a href="<?php echo base_url('user/notifications'); ?>" class="ajaxLoad list-group-item<?php if($this->uri->segment(2) == 'notifications') echo ' active'; ?>"><i class="fa fa-bell"></i> &nbsp; <?php echo phrase('notifications'); ?></a>
+
 
 					
 							

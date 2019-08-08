@@ -82,7 +82,6 @@ class Users extends CI_Controller
 			$this->form_validation->set_rules('address', phrase('address'), 'trim|required|xss_clean');
 			$this->form_validation->set_rules('language', phrase('language'), 'trim|xss_clean');
 			$this->form_validation->set_rules('bio', phrase('address'), 'trim|xss_clean');
-			$this->form_validation->set_rules('level', phrase('level'), 'trim|required|xss_clean');
 			$this->form_validation->set_rules('email', phrase('email_address'), 'trim|required|valid_email|is_unique[users.email.userID.'.$this->session->userdata('userID').']');
 			$this->form_validation->set_rules('username', phrase('username'), 'trim|required|alpha_dash|is_unique[users.userName.userID.'.$this->session->userdata('userID').']');
 			
@@ -107,13 +106,14 @@ class Users extends CI_Controller
 					'address'			=> $this->input->post('address'),
 					'email'				=> $this->input->post('email'),
 					'language'			=> $this->input->post('language'),
-					'bio'				=> $this->input->post('bio'),
-					'level'				=> $this->input->post('level'),
-					'password'			=> sha1($this->input->post('con_password') . SALT)
+					'bio'				=> $this->input->post('bio')
 				);
-				
+				if(null != $this->input->post('con_password'))
+				{
+					$fields['password']	= sha1($this->input->post('con_password') . SALT);
+				}
 		
-				if($this->Users_model->updateUser($fields, $this->uri->segment(4)))
+				if($this->model->updateUser($fields, $this->uri->segment(4)))
 				{
 					$this->session->set_flashdata('success', phrase('user_profile_was_updated_successfully'));
 					echo json_encode(array("status" => 200, "redirect" => base_url('user/users')));

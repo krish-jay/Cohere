@@ -1050,6 +1050,116 @@ if(!function_exists('getComments'))
 		return $comments;
 	}
 }
+// answers
+
+if(!function_exists('getAnswers'))
+{
+	function getAnswers($type = null, $itemID = 0, $limit = 10)
+	{
+		$CI =& get_instance();
+		if($type == 'updates')
+		{
+			$CI->db->where('commentType', 0);
+		}
+		if($type == 'posts')
+		{
+			$CI->db->where('commentType', 1);
+		}
+		elseif($type == 'snapshots')
+		{
+			$CI->db->where('commentType', 2);
+		}
+		elseif($type == 'openletters')
+		{
+			$CI->db->where('commentType', 3);
+		}
+		elseif($type == 'tv')
+		{
+			$CI->db->where('commentType', 4);
+		}
+		
+		$CI->db->where('itemID', $itemID);
+		$CI->db->order_by('commentID', 'DESC');
+		$CI->db->limit($limit);
+		$query = $CI->db->get('comments');
+		
+		$comments = 
+			($CI->session->userdata('loggedIn') ? '
+			<form id="addCommentForm" method="post" class="form-horizontal bg-info rounded-top" action="' . base_url('user/comment/' . $type . '/' . $itemID) . '" data-id="' . $type . $itemID . '">
+				<div class="col-sm-12">
+					<div class="form-group commentArea">
+						<div class="col-sm-12 nopadding">
+							<div class="input-group">
+								<span class="input-group-addon" style="padding:0;width:30px">
+									<img src="' . base_url('uploads/users/thumbs/' . imageCheck('users', getUserPhoto($CI->session->userdata('userID')), 1)) . '" width="30" height="30" alt="..." class="rounded" />
+								</span>
+								<textarea name="comments" id="commentInput" class="redactor form-control" placeholder="' . phrase('write_your_answer_here') . '"></textarea>
+								<span class="input-group-addon">
+									<input type="hidden" name="hash" value="' . sha1('p0st' . $itemID) . '" />
+									<button class="btn nopadding commentBtn" style="padding-right:0;padding-left:0" type="submit"><i class="fa fa-check-circle"></i></button>
+								</span>
+							</div>
+							<div class="statusHolder"></div>
+						</div>
+					</div>
+				</div>
+			</form>
+			' : '
+			<div class="bordered text-center bg-info rounded-top" style="background:#fff;padding:10px">
+				<a data-toggle="modal" data-dismiss="modal" href="#login" class="btn btn-warning"><i class="fa fa-lock"></i> &nbsp; ' . phrase('please_login_to_answer') . '</a>
+			</div>
+			')
+		;
+		$comments .= '
+			<div class="col-sm-12 rounded-bottom bordered nomargin comments_holder-' . $type . $itemID . '" style="margin-bottom:10px!important">
+				<div class="fetch_new_comment"></div>
+		';
+		if($query->num_rows() > 0)
+		{
+			$n = 0;
+			foreach($query->result_array() as $row)
+			{
+				$comments .=
+				'
+					<div class="row comment-tree comment' . $row['commentID'] . '"' . ($n++ != 0 ? ' style="border-top:1px solid #eee"' : '') . '>
+						<div class="col-xs-2 col-sm-1" style="padding-right:0">
+							<img src="' . base_url('uploads/users/thumbs/' . imageCheck('users', getUserPhoto($row['userID']), 1)) . '" class="rounded" width="30" height="30" alt="..." />
+						</div>
+						<div class="col-xs-10 col-sm-11">
+							<p class="comment-text relative">
+								<a href="' . base_url(getUsernameByID($row['userID'])) . '" class="ajaxLoad hoverCard">
+									<b>' . getFullnameByID($row['userID']) . '</b> &nbsp; 
+								</a>
+								<span id="rcomment' . $row['commentID'] . '">' . nl2br(special_parse($row['comments'])) . '</span>
+								<br />
+								<small class="comment-tools text-muted">
+									<i class="fa fa-clock-o"></i>' . time_since($row['timestamp']) . '
+								</small>
+								' . ($CI->session->userdata('loggedIn') ? '
+								<div class="btn-group absolute" style="right:10px;top:10px">
+									' . ($CI->session->userdata('userID') == $row['userID'] ? '<a class="delete-comment btn btn-xs btn-default btn-icon-only" href="javascript:void(0)" onclick="confirm_modal(\'' . base_url('user/remove/comments/' . $row['commentID'] . '/' . $type . '-' . $itemID) . '\', \'comment' . $row['commentID'] . '\', \'' . $type . $itemID . '\')" data-push="tooltip" data-placement="top" data-title="' . phrase('remove') . '"><i class="fa fa-times"></i></a>' : '<a class="reply-comment btn btn-xs btn-default btn-icon-only" href="javascript:void(0)" data-reply="' . $row['commentID'] . '" data-summon="' . getUsernameByID($row['userID']) . '" data-push="tooltip" data-placement="top" data-title="' . phrase('reply') . '"><i class="fa fa-reply"></i></a><a class="report-comment btn btn-xs btn-default btn-icon-only" href="javascript:void(0)" onclick="confirm_modal(\'' . base_url('user/report/comments/' . $row['commentID'] . '/' . $type . '-' . $itemID) . '\', \'comment' . $row['commentID'] . '\', \'' . $type . $itemID . '\')" data-push="tooltip" data-plcement="top" data-title="' . phrase('report') . '"><i class="fa fa-ban"></i></a>') . '
+								</div>
+								' : '') . '
+							</p>
+						</div>
+					</div>
+				';
+				$n++;
+			}
+		}
+		else
+		{
+			$comments .= '<div class="col-sm-12 text-center text-muted"><small>' . phrase('be_first_to_answer') . '</small></div>';
+		}
+		$comments .='</div><div class="clearfix"></div>';
+		
+		return $comments;
+	}
+
+}
+
+
+//
 
 if(!function_exists('getSnapshotSlugByID'))
 {
@@ -1319,3 +1429,4 @@ if(!function_exists('userSearchCount'))
 		}
 	}
 }
+?>

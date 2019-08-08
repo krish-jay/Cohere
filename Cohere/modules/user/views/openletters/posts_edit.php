@@ -17,28 +17,25 @@
 						<h3><i class="fa fa-edit"></i> &nbsp; <?php echo phrase('update_open_letter'); ?></h3>
 					</div>
 					<?php } ?>
-					
+					<h3><i class="fa fa-edit"></i> &nbsp; <?php echo phrase('update_open_letter'); ?></h3>
 					<div class="modal-body">
 						<div class="form-group">
 							<div class="col-sm-12">
-								<input type="text" name="title" class="form-control input-lg" value="<?php echo htmlspecialchars(set_value('title', $p['title'])); ?>" placeholder="<?php echo phrase('letter_headline'); ?>" />
+								<input type="text" name="title" class="form-control input-lg" value="<?php echo htmlspecialchars(set_value('title', $p['title'])); ?>" placeholder="<?php echo phrase('question_title'); ?>" />
 							</div>
 						</div>
 						<div class="form-group">
 							<div class="col-sm-12">
-								<input type="text" name="targetName" class="form-control" value="<?php echo htmlspecialchars(set_value('targetName', $p['targetName'])); ?>" placeholder="<?php echo phrase('aimed_to'); ?>" />
+								<textarea name="content" class="redactor form-control" placeholder="<?php echo phrase('write_your_question_here'); ?>"><?php echo set_value('content', $p['content']); ?></textarea>
 							</div>
 						</div>
 						<div class="form-group">
-							<div class="col-sm-12">
-								<textarea name="targetDetails" class="form-control" placeholder="<?php echo phrase('target_details'); ?>"><?php echo htmlspecialchars(set_value('targetDetails', $p['targetDetails'])); ?></textarea>
-							</div>
-						</div>
-						<div class="form-group">
-							<div class="col-sm-12">
-								<textarea name="content" class="redactor form-control" placeholder="<?php echo phrase('write_complete_letter_here'); ?>"><?php echo set_value('content', $p['content']); ?></textarea>
-							</div>
-						</div>
+									<div class="col-sm-12">
+										<h4><?php echo phrase('tags'); ?></h4>
+										<input name="tags"  data-role="tagsinput" class="form-control" type="text" value="<?php echo set_value('tags', $p['tags']); ?>" />
+									</div>
+								</div>
+						
 						<div class="form-group">
 							<div class="col-sm-12 statusHolder">
 							</div>
