@@ -3,7 +3,7 @@
 		<div class="container first-child">
 			<div class="row">
 				<div class="col-md-9 hidden-xs">
-					<h2><i class="fa fa-newspaper-o"></i> &nbsp; <?php echo phrase('Blogs'); ?></h2>
+					<h2><i class="fa fa-newspaper-o"></i> &nbsp;  <?php echo 'Blogs'; ?></h2>
 				</div>
 				<div class="col-md-3">
 					<?php if(!$this->session->userdata('loggedIn')) { ?>

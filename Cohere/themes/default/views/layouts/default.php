@@ -38,7 +38,7 @@
 					<a class="navbar-brand ajaxLoad" href="<?php echo base_url(); ?>"><img src="<?php echo base_url('themes/default/images/logo.png'); ?>" alt="logo" height="100%" /></a>
 					<ul class="nav navbar-nav">
 						<li<?php echo ($this->uri->segment(1) == 'posts' ? ' class="active"' : ''); ?>>
-							<a href="<?php echo base_url('posts'); ?>" class="ajaxLoad"><i class="fa fa-newspaper-o"></i> <?php echo phrase('__blogs'); ?></a>
+							<a href="<?php echo base_url('posts'); ?>" class="ajaxLoad"><i class="fa fa-newspaper-o"></i> <?php echo 'Blogs'; ?></a>
 						</li>
 						<li<?php echo ($this->uri->segment(1) == 'snapshots' ? ' class="active"' : ''); ?>>
 							<a href="<?php echo base_url('snapshots'); ?>" class="ajaxLoad"><i class="fa fa-image"></i> <?php echo phrase('__snapshot'); ?></a>
